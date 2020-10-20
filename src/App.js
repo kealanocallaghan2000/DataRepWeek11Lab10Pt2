@@ -11,6 +11,8 @@ import {Navbar, Nav} from 'react-bootstrap';
 
 //react router dom
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { Create } from './components/create';
+import { Read } from './components/read';
 
 //Changed from function to class for reusability
 class App extends Component {
@@ -34,8 +36,8 @@ render(){
       <br />
       <Switch>
         <Route path='/' component={Content} exact/>
-        <Route path='/create' component={Header} exact/>
-        <Route path='/read' component={Footer} exact/>
+        <Route path='/create' component={Create} exact/>
+        <Route path='/read' component={Read} exact/>
       </Switch>
 
 
