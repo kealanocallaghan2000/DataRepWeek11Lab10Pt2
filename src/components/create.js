@@ -1,5 +1,8 @@
 // import react
 import React from 'react';
+//import axios http client
+import axios from 'axios';
+
 
 
 // include export to import to app.js
@@ -39,7 +42,23 @@ export class Create extends React.Component {
             + this.state.Title + ' Year: '
             + this.state.Year + ' Poster: '
             + this.state.Poster);
-    }
+
+        const newMovie = {
+            title: this.state.Title,
+            year: this.state.Year,
+            poster: this.state.Poster
+        }
+
+            //post request to url
+            
+            axios.post('http://localhost:4000/api/movies', newMovie)
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
+        }
 
     render() {
         return (
