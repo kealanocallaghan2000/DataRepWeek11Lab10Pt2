@@ -11,7 +11,7 @@ export class Movies extends React.Component {
         //passing in new "movie" item
         return this.props.movies.map((movie) => {
             //making a component for each seperate movie
-            return <MovieItem movie={movie}></MovieItem>
+            return <MovieItem movie={movie} ReloadData={this.props.ReloadData}></MovieItem>
         })
     }
 } 

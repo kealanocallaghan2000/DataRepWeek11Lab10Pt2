@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 // include export to import to app.js
-export class Create extends React.Component {
+export class Edit extends React.Component {
 
     constructor() {
         super();
@@ -23,6 +23,24 @@ export class Create extends React.Component {
         }
     }
 
+    //to pull parameter out
+    componentDidMount() {
+        console.log(this.props.match.params.id);
+
+        axios.get('http://localhost:4000/api/movies/' + this.props.match.params.id)
+            .then(response => {
+                this.setState({ //updating the state
+                    _id: response.data._id,
+                    Title: response.data.title,
+                    Year: response.data.year,
+                    Poster: response.data.poster
+                })
+            })
+            .catch((error) => {
+                console.log("Error");
+            });
+    }
+
     //method for when values are changed
     onChangeMovieName(e) {
         this.setState({ Title: e.target.value })
@@ -33,7 +51,7 @@ export class Create extends React.Component {
     }
 
     onChangeMoviePoster(e) {
-        this.setState({ Poster: e.target.value })
+        this.setState({ Pposter: e.target.value })
     }
 
     //method from when text is submitted
@@ -46,18 +64,25 @@ export class Create extends React.Component {
         const newMovie = {
             title: this.state.Title,
             year: this.state.Year,
-            poster: this.state.Poster
+            poster: this.state.Poster,
+            _id: this.state._id
         }
 
-        //post request to url
-
-        axios.post('http://localhost:4000/api/movies', newMovie)
-            .then((res) => {
-                console.log(res);
+        axios.put('http://localhost:4000/api/movies/' + this.state._id, newMovie)
+            .then(res => {
+                console.log(res.data)
             })
-            .catch((err) => {
-                console.log(err);
-            });
+            .catch();
+
+
+        //post request to url   
+        // axios.post('http://localhost:4000/api/movies', newMovie)
+        // .then((res)=>{
+        //     console.log(res);
+        // })
+        // .catch((err)=>{
+        //     console.log(err);
+        // });
     }
 
     render() {
@@ -100,7 +125,7 @@ export class Create extends React.Component {
                     {/* button for submtting movie data */}
                     <div>
                         <input type="submit"
-                            value="Add Movie">
+                            value="Edit Movie">
                         </input>
                     </div>
                 </form>

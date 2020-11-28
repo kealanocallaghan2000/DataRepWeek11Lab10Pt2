@@ -1,10 +1,31 @@
 // imported bootstrap
 import Card from 'react-bootstrap/Card';
 import React from 'react';
-
+import { Link } from 'react-router-dom';
+import Axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 // include export to import to app.js
 export class MovieItem extends React.Component {
+
+    constructor() {
+        super();
+        this.DeleteMovie = this.DeleteMovie.bind(this);
+    }
+
+    //delete movie method
+    DeleteMovie(e) {
+        e.preventDefault();
+        Axios.delete('http://localhost:4000/api/movies/'
+            + this.props.movie._id)
+            .then(() => {
+                this.props.ReloadData();
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
+    }
+
 
     render() {
         return (
@@ -12,7 +33,7 @@ export class MovieItem extends React.Component {
                 {/* card code taken from bootstrap */}
                 <Card>
                     {/* title */}
-                    <Card.Header>{this.props.movie.title}</Card.Header>
+                    <h3> <Card.Header>{this.props.movie.title}</Card.Header></h3>
                     <Card.Body>
                         <blockquote className="blockquote mb-0">
                             {/* image */}
@@ -24,8 +45,9 @@ export class MovieItem extends React.Component {
                             </footer>
                         </blockquote>
                     </Card.Body>
+                    <Button variant="danger"
+                        onClick={this.DeleteMovie}>Delete</Button>
                 </Card>
-
             </div>
         );
     }

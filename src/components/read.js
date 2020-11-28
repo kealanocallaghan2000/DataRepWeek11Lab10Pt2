@@ -1,13 +1,20 @@
 // import react
-import React  from 'react';
+import React from 'react';
 import { Movies } from './movies';
 import axios from 'axios';
 
 
 // include export to import to app.js
-export class Read extends React.Component{
+export class Read extends React.Component {
 
-    //object that handles the data for our components
+    //handles the reload data for our components
+    constructor() {
+        super();
+        this.ReloadData = this.ReloadData.bind(this);
+    }
+
+
+
     state = {
         //json data for movies
         movies: []
@@ -15,26 +22,39 @@ export class Read extends React.Component{
 
 
     //axios pulls json data from the link instead of hardcoding data
-    componentDidMount(){
-        axios.get('http://localhost:4000/api/movies')    
-        .then(response =>{
-            this.setState({movies: response.data})
-        })
-        //catch for when an error occurs
-        .catch(
-            (error)=>{
-                console.log(error);
-            }    
-        );
+    componentDidMount() {
+        axios.get('http://localhost:4000/api/movies')
+            .then(response => {
+                this.setState({ movies: response.data })
+            })
+            //catch for when an error occurs
+            .catch(
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }
+
+    ReloadData() {
+        axios.get('http://localhost:4000/api/movies')
+            .then((response) => {
+                this.setState({ movies: response.data })
+            })
+            //catch for when an error occurs
+            .catch(
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
 
     //visual piece of the component
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1>This is the read component</h1>
                 {/* embedded from movies component */}
-                <Movies movies = {this.state.movies}></Movies>
+                <Movies movies={this.state.movies} ReloadData={this.ReloadData}></Movies>
             </div>
         );
     }
