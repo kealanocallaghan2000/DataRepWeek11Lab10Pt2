@@ -5,7 +5,7 @@ const cors = require('cors');// cross origin resourse sharing
 const bodyParser = require("body-parser");
 const { Redirect } = require('react-router-dom');
 const mongoose = require('mongoose');// connects mongoose
-const path = require('path');
+const path = require('path'); //path to be called
 
 app.use(cors());
 app.use(function (req, res, next) {
@@ -103,6 +103,7 @@ app.post('/api/movies', (req, res) => {
     res.send("Item Added!");
 });
 
+//for all other roots, send file back 
 app.get('*', (req,res)=>{
     res.sendFile(path.join(__dirname+'/../build/index.html'));
 })
